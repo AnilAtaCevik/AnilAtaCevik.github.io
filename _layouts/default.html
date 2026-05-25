@@ -15,8 +15,6 @@
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            
-            /* CRITICAL: Elemanlar sağa kayarken tarayıcıda yatay kaydırma çubuğu çıkmasını engeller */
             overflow-x: hidden; 
         }
 
@@ -34,8 +32,6 @@
             border-radius: 5px;
             z-index: 1001; 
             box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-            
-            /* Geçiş animasyonu */
             transition: transform 0.3s ease, background-color 0.2s;
         }
 
@@ -55,8 +51,6 @@
             display: flex; align-items: center;
             padding-left: 75px; 
             box-sizing: border-box;
-            
-            /* İtilme animasyonu */
             transition: transform 0.3s ease;
         }
 
@@ -70,14 +64,12 @@
         .sidebar {
             position: fixed; 
             top: 0; 
-            left: -260px; /* Başlangıçta ekranın solunda tamamen gizli */
+            left: -260px; 
             width: 260px; height: 100vh;
             background-color: #252526;
             box-shadow: 4px 0 15px rgba(0,0,0,0.8);
             z-index: 1000; overflow-y: auto;
             padding-top: 80px; 
-            
-            /* İçeri gelme animasyonu */
             transition: left 0.3s ease;
         }
 
@@ -91,15 +83,12 @@
             border-radius: 12px; 
             border: 1px solid rgba(255, 255, 255, 0.1); 
             box-shadow: 0 15px 35px rgba(0,0,0,0.7); 
-            
             padding: 40px 6%;
             line-height: 1.6;
             font-size: 1.1em;
             max-width: 900px;
             margin: 100px auto 50px auto; 
-            
-            /* İtilme animasyonu */
-            transition: transform 0.3s ease;
+            /* İtilme animasyonunu buradan kaldırdık, artık sabit kalacak */
         }
 
         .sidebar h3 { color: #aaaaaa; font-size: 1em; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; border-bottom: 1px solid #444; padding-bottom: 10px;}
@@ -110,17 +99,16 @@
 
 
         /* ========================================================
-           AÇIK MENÜ DURUMU (PUSH / İTME MEKANİZMASI KOORDİNASYONU)
+           AÇIK MENÜ DURUMU (YENİ MEKANİZMA)
            ======================================================== */
            
-        /* 1. Yan menü ekrana giriş yapar */
+        /* 1. Yan menü ekrana giriş yapar (Ana yazının üstüne biner) */
         body.sidebar-open .sidebar {
             left: 0;
         }
 
-        /* 2. Üst bar, buton ve ana yazı alanı aynı anda tam 260px sağa itilir */
+        /* 2. SADECE Üst bar ve buton sağa itilir */
         body.sidebar-open .top-bar,
-        body.sidebar-open .main-area,
         body.sidebar-open .toggle-btn {
             transform: translateX(260px);
         }
@@ -150,7 +138,6 @@
 
     <script>
         function toggleSidebar() {
-            // Durumu doğrudan body elementine yazıyoruz ki CSS üstteki kuralları tetikleyebilsin
             document.body.classList.toggle("sidebar-open");
         }
     </script>
