@@ -11,96 +11,133 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             height: 100vh;
-            background-color: #1e1e1e; /* Koyu arka plan */
+            background-color: #1e1e1e;
             color: #d4d4d4;
+            overflow: hidden; /* Sayfanın dışa taşmasını engeller */
         }
 
-        /* Sol Bar Tasarımı */
+        /* Sol Bar (Sidebar) Tasarımı */
         .sidebar {
             width: 260px;
+            min-width: 260px; /* Alt küçülme limiti */
             background-color: #252526;
-            padding: 30px 20px;
             box-shadow: 2px 0 10px rgba(0,0,0,0.5);
-            overflow-y: auto;
+            transition: margin-left 0.3s ease; /* Açılma/Kapanma animasyonu */
+            z-index: 1000;
+            height: 100vh;
             display: flex;
             flex-direction: column;
         }
 
-        /* DevLog Ana Sayfa Butonu */
-        .home-btn {
-            font-size: 1.8em;
-            font-weight: bold;
-            color: #ffffff;
-            text-decoration: none;
-            margin-bottom: 40px;
-            border-bottom: 2px solid #4daafc;
-            padding-bottom: 10px;
-        }
-
-        .home-btn:hover {
-            color: #4daafc;
-        }
-
-        /* Latest Updates Başlığı */
-        .sidebar h3 {
-            color: #aaaaaa;
-            font-size: 1em;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-        }
-
-        /* Log Linkleri */
-        .sidebar a.log-link {
-            color: #4daafc;
-            text-decoration: none;
-            display: block;
-            margin-bottom: 12px;
-            font-size: 1.05em;
-            line-height: 1.4;
-        }
-
-        .sidebar a.log-link:hover {
-            color: #9cdcfe;
-            text-decoration: underline;
-        }
-
-        /* Sağ Taraf - Ana İçerik */
-        .content {
-            flex: 1;
-            padding: 50px 8%;
+        .sidebar-content {
+            padding: 30px 20px;
             overflow-y: auto;
+            width: 220px; /* Paddingleri hesaba katarak toplam 260px yapar */
+        }
+
+        /* Masaüstünde kapatıldığında sola kayarak gizlenmesi */
+        .sidebar.closed {
+            margin-left: -260px;
+        }
+
+        /* Sağ Taraf - Ana İçerik Alanı */
+        .main-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* Üst Bar (Menü Butonunun duracağı yer) */
+        .top-bar {
+            padding: 15px 20px;
+            background-color: #1e1e1e;
+            position: sticky;
+            top: 0;
+        }
+
+        /* Aç/Kapat Butonu (Hamburger Menü) */
+        .toggle-btn {
+            background: none;
+            color: #d4d4d4;
+            border: none;
+            font-size: 26px;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: 0.2s;
+        }
+
+        .toggle-btn:hover {
+            color: #4daafc;
+            background-color: #333333;
+        }
+
+        .content {
+            padding: 10px 8%;
             line-height: 1.6;
             font-size: 1.1em;
         }
 
-        /* İçerik içindeki başlıklar ve görseller */
-        .content h1, .content h2 {
-            color: #ffffff;
-        }
-        
-        .content img {
-            max-width: 100%;
-            border-radius: 8px;
-            margin-top: 15px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        /* Link ve Başlık Tasarımları */
+        .home-btn { font-size: 1.8em; font-weight: bold; color: #ffffff; text-decoration: none; margin-bottom: 40px; border-bottom: 2px solid #4daafc; padding-bottom: 10px; display: block; }
+        .home-btn:hover { color: #4daafc; }
+        .sidebar h3 { color: #aaaaaa; font-size: 1em; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; }
+        .sidebar a.log-link { color: #4daafc; text-decoration: none; display: block; margin-bottom: 12px; font-size: 1.05em; }
+        .sidebar a.log-link:hover { color: #9cdcfe; text-decoration: underline; }
+        .content h1, .content h2 { color: #ffffff; }
+        .content img { max-width: 100%; border-radius: 8px; margin-top: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
+
+        /* TELEFON VE TABLET İÇİN (Responsive) */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: absolute; /* Mobilde içeriği sıkıştırmak yerine üstüne biner */
+                margin-left: -260px; /* Mobilde başlangıçta kapalıdır */
+            }
+            .sidebar.open {
+                margin-left: 0; /* Mobilde menü butonuna basıldığında açılır */
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="sidebar">
-        <a href="/" class="home-btn">🏠 DevLog</a>
-        
-        <h3>Latest Updates</h3>
-        {% for post in site.posts %}
-            <a href="{{ post.url }}" class="log-link">➔ {{ post.title }}</a>
-        {% endfor %}
+    <div class="sidebar" id="mySidebar">
+        <div class="sidebar-content">
+            <a href="/" class="home-btn">🏠 DevLog</a>
+            <h3>Latest Updates</h3>
+            {% for post in site.posts %}
+                <a href="{{ post.url }}" class="log-link">➔ {{ post.title }}</a>
+            {% endfor %}
+        </div>
     </div>
 
-    <div class="content">
-        {{ content }}
+    <div class="main-area">
+        <div class="top-bar">
+            <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+        </div>
+
+        <div class="content">
+            {{ content }}
+        </div>
     </div>
+
+    <script>
+        function toggleSidebar() {
+            var sidebar = document.getElementById("mySidebar");
+            
+            // Cihaz ekranı telefon boyutundaysa
+            if (window.innerWidth <= 768) {
+                sidebar.classList.toggle("open");
+            } 
+            // Cihaz ekranı genişse (masaüstü)
+            else {
+                sidebar.classList.toggle("closed");
+            }
+        }
+    </script>
 
 </body>
 </html>
