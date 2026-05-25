@@ -5,18 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ site.title }}</title>
     <style>
-        /* Genel Site Ayarları ve ARKA PLAN GÖRSELİ */
+        /* Genel Site Ayarları */
         body {
             margin: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #d4d4d4;
             background-color: #1e1e1e;
+            color: #d4d4d4;
+            background-image: url('/assets/images/bg.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             
-            /* Arka plan resmi ayarları */
-            background-image: url('/assets/images/bg.png'); /* Yüklediğin görselin adı/uzantısı farklıysa burayı değiştir */
-            background-size: cover; /* Ekrana tam oturt */
-            background-position: center; /* Ortala */
-            background-attachment: fixed; /* Yazıyı kaydırırken resim sabit kalsın */
+            /* CRITICAL: Elemanlar sağa kayarken tarayıcıda yatay kaydırma çubuğu çıkmasını engeller */
+            overflow-x: hidden; 
         }
 
         /* Sabit Aç/Kapat Butonu ☰ */
@@ -32,8 +33,10 @@
             padding: 5px 12px;
             border-radius: 5px;
             z-index: 1001; 
-            transition: background-color 0.2s;
             box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            
+            /* Geçiş animasyonu */
+            transition: transform 0.3s ease, background-color 0.2s;
         }
 
         @media (hover: hover) {
@@ -41,7 +44,7 @@
         }
         .toggle-btn:active { background-color: #4daafc; }
 
-        /* Üst Bar (Orijinal gri kalsın ki zıtlık yaratsın) */
+        /* Üst Bar */
         .top-bar {
             position: fixed;
             top: 0; left: 0;
@@ -52,6 +55,9 @@
             display: flex; align-items: center;
             padding-left: 75px; 
             box-sizing: border-box;
+            
+            /* İtilme animasyonu */
+            transition: transform 0.3s ease;
         }
 
         .top-bar-title {
@@ -60,45 +66,64 @@
         }
         .top-bar-title:hover { color: #4daafc; }
 
-        /* Sol Bar */
+        /* Sol Bar (Sidebar) */
         .sidebar {
             position: fixed; 
-            top: 0; left: -280px; 
+            top: 0; 
+            left: -260px; /* Başlangıçta ekranın solunda tamamen gizli */
             width: 260px; height: 100vh;
             background-color: #252526;
-            box-shadow: 4px 0 15px rgba(0,0,0,0.9);
-            transition: left 0.3s ease; 
+            box-shadow: 4px 0 15px rgba(0,0,0,0.8);
             z-index: 1000; overflow-y: auto;
             padding-top: 80px; 
+            
+            /* İçeri gelme animasyonu */
+            transition: left 0.3s ease;
         }
 
-        .sidebar.open { left: 0; }
         .sidebar-content { padding: 0 20px 30px 20px; }
 
-        /* YENİ: Saydam Gri Panel (Ana İçerik Kutusu) */
+        /* Ana İçerik Alanı (Şeffaf Kutu) */
         .main-area {
-            background-color: rgba(20, 20, 20, 0.75); /* %75 oranında saydam koyu gri zemin */
-            backdrop-filter: blur(8px); /* Arkadaki görseli buzlu cam gibi hafif bulanıklaştırır */
-            -webkit-backdrop-filter: blur(8px); /* Safari desteği */
-            border-radius: 12px; /* Köşeleri yuvarlatır */
-            border: 1px solid rgba(255, 255, 255, 0.1); /* Çerçeveye ince parlak bir sınır ekler */
-            box-shadow: 0 15px 35px rgba(0,0,0,0.7); /* Kutuyu ekrandan havaya kaldırır (gölge) */
+            background-color: rgba(20, 20, 20, 0.75); 
+            backdrop-filter: blur(8px); 
+            -webkit-backdrop-filter: blur(8px); 
+            border-radius: 12px; 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.7); 
             
             padding: 40px 6%;
             line-height: 1.6;
             font-size: 1.1em;
             max-width: 900px;
-            
-            /* Üstteki bardan kurtarmak için üstten 100px boşluk, sayfayı ortalamak için auto */
             margin: 100px auto 50px auto; 
+            
+            /* İtilme animasyonu */
+            transition: transform 0.3s ease;
         }
 
-        /* Link ve Başlık Tasarımları */
         .sidebar h3 { color: #aaaaaa; font-size: 1em; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; border-bottom: 1px solid #444; padding-bottom: 10px;}
         .sidebar a.log-link { color: #4daafc; text-decoration: none; display: block; margin-bottom: 12px; font-size: 1.05em; }
         .sidebar a.log-link:hover { color: #9cdcfe; text-decoration: underline; }
         .main-area h1, .main-area h2 { color: #ffffff; }
         .main-area img { max-width: 100%; border-radius: 8px; margin-top: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.5); }
+
+
+        /* ========================================================
+           AÇIK MENÜ DURUMU (PUSH / İTME MEKANİZMASI KOORDİNASYONU)
+           ======================================================== */
+           
+        /* 1. Yan menü ekrana giriş yapar */
+        body.sidebar-open .sidebar {
+            left: 0;
+        }
+
+        /* 2. Üst bar, buton ve ana yazı alanı aynı anda tam 260px sağa itilir */
+        body.sidebar-open .top-bar,
+        body.sidebar-open .main-area,
+        body.sidebar-open .toggle-btn {
+            transform: translateX(260px);
+        }
 
     </style>
 </head>
@@ -125,8 +150,8 @@
 
     <script>
         function toggleSidebar() {
-            var sidebar = document.getElementById("mySidebar");
-            sidebar.classList.toggle("open");
+            // Durumu doğrudan body elementine yazıyoruz ki CSS üstteki kuralları tetikleyebilsin
+            document.body.classList.toggle("sidebar-open");
         }
     </script>
 
