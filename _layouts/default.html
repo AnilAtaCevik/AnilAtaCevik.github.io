@@ -6,26 +6,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ site.title }}</title>
     <style>
-        body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #1e1e1e; color: #d4d4d4; background-image: url('/assets/images/bg1.png'); background-size: cover; background-position: center; background-attachment: fixed; overflow-x: hidden; }
+        /* Genel Site Ayarları */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            
+            /* Bilgisayar için varsayılan yatay arka plan */
+            background-image: url('/assets/images/bg1.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Yazı kayarken resim sabit kalır */
+            overflow-x: hidden; 
+        }
+
+        /* YENİ: Telefon ve Tablet için ayrı arka plan görseli (768px ve altı) */
+        @media (max-width: 768px) {
+            body {
+                background-image: url('/assets/images/bg1_m.png');
+                /* Not: Mobilde fixed (sabit) arka planlar bazen performans sorunu veya 
+                   zıplama yapabilir. Eğer sorun olursa 'fixed' yerine 'scroll' yapabilirsin. */
+                background-attachment: fixed; 
+            }
+        }
+
+        /* Sabit Aç/Kapat Butonu ☰ */
         .toggle-btn { position: fixed; top: 12px; left: 15px; background-color: #333333; color: #ffffff; border: none; font-size: 24px; cursor: pointer; padding: 5px 12px; border-radius: 5px; z-index: 1001; box-shadow: 0 2px 5px rgba(0,0,0,0.5); transition: transform 0.3s ease, background-color 0.2s; }
         @media (hover: hover) { .toggle-btn:hover { background-color: #4daafc; } }
         .toggle-btn:active { background-color: #4daafc; }
 
+        /* Üst Bar */
         .top-bar { position: fixed; top: 0; left: 0; width: 100%; height: 60px; background-color: rgba(30, 30, 30, 0.55); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 2px 15px rgba(0,0,0,0.6); z-index: 999; display: flex; align-items: center; justify-content: space-between; padding-left: 75px; padding-right: 30px; box-sizing: border-box; transition: padding-left 0.3s ease; }
         .top-bar-title { font-size: 1.5em; font-weight: bold; color: #ffffff; text-decoration: none; transition: color 0.2s; }
         .top-bar-title:hover { color: #4daafc; }
 
+        /* Dil Seçeneği Butonları */
         .lang-menu { display: flex; gap: 10px; }
         .lang-btn { color: #aaaaaa; text-decoration: none; font-size: 0.85em; font-weight: bold; padding: 5px 12px; border: 1px solid #555; border-radius: 6px; transition: all 0.2s; letter-spacing: 1px; }
         .lang-btn:hover { color: #ffffff; border-color: #4daafc; background-color: rgba(77, 170, 252, 0.1); }
         .lang-btn.active { color: #4daafc; border-color: #4daafc; background-color: rgba(77, 170, 252, 0.15); cursor: default; }
 
+        /* Sol Bar (Sidebar) */
         .sidebar { position: fixed; top: 0; left: -260px; width: 260px; height: 100vh; background-color: #252526; box-shadow: 4px 0 15px rgba(0,0,0,0.8); z-index: 1000; overflow-y: auto; padding-top: 0; transition: left 0.3s ease; }
         .sidebar-header { display: flex; align-items: center; height: 60px; padding: 0 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); margin-bottom: 20px; box-sizing: border-box; }
         .sidebar-logo { height: 50px; width: auto; margin-right: 15px; }
         .sidebar-title { color: #ffffff; font-size: 1.4em; font-weight: bold; letter-spacing: 1px; }
         .sidebar-content { padding: 0 20px 30px 20px; }
 
+        /* Ana İçerik Alanı */
         .main-area { background-color: rgba(30, 30, 30, 0.55); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 15px 35px rgba(0,0,0,0.7); padding: 40px 6%; line-height: 1.6; font-size: 1.1em; max-width: 900px; margin: 100px auto 50px auto; }
         .sidebar h3 { color: #aaaaaa; font-size: 1em; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; border-bottom: 1px solid #444; padding-bottom: 10px;}
         .sidebar a.log-link { color: #4daafc; text-decoration: none; display: block; margin-bottom: 12px; font-size: 1.05em; }
@@ -33,15 +62,11 @@
         .main-area h1, .main-area h2 { color: #ffffff; }
         .main-area img { max-width: 100%; border-radius: 8px; margin-top: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.5); }
 
-        /* ========================================================
-           AÇIK MENÜ DURUMU VE CİHAZ UYUMLULUĞU (RESPONSIVE)
-           ======================================================== */
-           
-        /* Her cihazda menü ekrana girer ve buton sağa kayar */
+        /* AÇIK MENÜ DURUMU VE CİHAZ UYUMLULUĞU (RESPONSIVE) */
         body.sidebar-open .sidebar { left: 0; }
         body.sidebar-open .toggle-btn { transform: translateX(260px); }
         
-        /* GÜNCELLENDİ: Sadece geniş ekranlarda (Bilgisayar/Tablet) üst bar sağa itilir */
+        /* Sadece geniş ekranlarda (Bilgisayar/Tablet) üst bar sağa itilir */
         @media (min-width: 769px) {
             body.sidebar-open .top-bar { padding-left: 335px; }
         }
