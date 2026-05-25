@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ site.title }}</title>
+    <style>
+        /* Genel Site Ayarları */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            height: 100vh;
+            background-color: #1e1e1e; /* Koyu arka plan */
+            color: #d4d4d4;
+        }
+
+        /* Sol Bar Tasarımı */
+        .sidebar {
+            width: 260px;
+            background-color: #252526;
+            padding: 30px 20px;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.5);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* DevLog Ana Sayfa Butonu */
+        .home-btn {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #ffffff;
+            text-decoration: none;
+            margin-bottom: 40px;
+            border-bottom: 2px solid #4daafc;
+            padding-bottom: 10px;
+        }
+
+        .home-btn:hover {
+            color: #4daafc;
+        }
+
+        /* Latest Updates Başlığı */
+        .sidebar h3 {
+            color: #aaaaaa;
+            font-size: 1em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        /* Log Linkleri */
+        .sidebar a.log-link {
+            color: #4daafc;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 12px;
+            font-size: 1.05em;
+            line-height: 1.4;
+        }
+
+        .sidebar a.log-link:hover {
+            color: #9cdcfe;
+            text-decoration: underline;
+        }
+
+        /* Sağ Taraf - Ana İçerik */
+        .content {
+            flex: 1;
+            padding: 50px 8%;
+            overflow-y: auto;
+            line-height: 1.6;
+            font-size: 1.1em;
+        }
+
+        /* İçerik içindeki başlıklar ve görseller */
+        .content h1, .content h2 {
+            color: #ffffff;
+        }
+        
+        .content img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-top: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <a href="/" class="home-btn">🏠 DevLog</a>
+        
+        <h3>Latest Updates</h3>
+        {% for post in site.posts %}
+            <a href="{{ post.url }}" class="log-link">➔ {{ post.title }}</a>
+        {% endfor %}
+    </div>
+
+    <div class="content">
+        {{ content }}
+    </div>
+
+</body>
+</html>
