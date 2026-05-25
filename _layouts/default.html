@@ -1,102 +1,37 @@
 <!DOCTYPE html>
-<html lang="tr">
+{% assign current_lang = page.lang | default: "en" %}
+<html lang="{{ current_lang }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ site.title }}</title>
     <style>
         /* Genel Site Ayarları */
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #1e1e1e;
-            color: #d4d4d4;
-            background-image: url('/assets/images/bg1.png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            overflow-x: hidden; 
-        }
-
-        /* Sabit Aç/Kapat Butonu ☰ */
-        .toggle-btn {
-            position: fixed; 
-            top: 12px;
-            left: 15px;
-            background-color: #333333;
-            color: #ffffff;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            padding: 5px 12px;
-            border-radius: 5px;
-            z-index: 1001; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-            transition: transform 0.3s ease, background-color 0.2s;
-        }
-
+        body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #1e1e1e; color: #d4d4d4; background-image: url('/assets/images/bg1.png'); background-size: cover; background-position: center; background-attachment: fixed; overflow-x: hidden; }
+        .toggle-btn { position: fixed; top: 12px; left: 15px; background-color: #333333; color: #ffffff; border: none; font-size: 24px; cursor: pointer; padding: 5px 12px; border-radius: 5px; z-index: 1001; box-shadow: 0 2px 5px rgba(0,0,0,0.5); transition: transform 0.3s ease, background-color 0.2s; }
         @media (hover: hover) { .toggle-btn:hover { background-color: #4daafc; } }
         .toggle-btn:active { background-color: #4daafc; }
 
         /* Üst Bar */
-        .top-bar {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 60px;
-            background-color: rgba(30, 30, 30, 0.55); 
-            backdrop-filter: blur(10px); 
-            -webkit-backdrop-filter: blur(10px); 
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
-            box-shadow: 0 2px 15px rgba(0,0,0,0.6);
-            z-index: 999; 
-            display: flex; align-items: center;
-            justify-content: space-between; 
-            padding-left: 75px; 
-            padding-right: 30px; 
-            box-sizing: border-box;
-            /* GÜNCELLENDİ: Transform yerine padding animasyonu eklendi */
-            transition: padding-left 0.3s ease; 
-        }
-
-        .top-bar-title {
-            font-size: 1.5em; font-weight: bold; color: #ffffff;
-            text-decoration: none; transition: color 0.2s;
-        }
+        .top-bar { position: fixed; top: 0; left: 0; width: 100%; height: 60px; background-color: rgba(30, 30, 30, 0.55); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 2px 15px rgba(0,0,0,0.6); z-index: 999; display: flex; align-items: center; justify-content: space-between; padding-left: 75px; padding-right: 30px; box-sizing: border-box; transition: padding-left 0.3s ease; }
+        .top-bar-title { font-size: 1.5em; font-weight: bold; color: #ffffff; text-decoration: none; transition: color 0.2s; }
         .top-bar-title:hover { color: #4daafc; }
 
         /* Dil Seçeneği Butonları */
         .lang-menu { display: flex; gap: 10px; }
-        .lang-btn {
-            color: #aaaaaa; text-decoration: none; font-size: 0.85em; font-weight: bold;
-            padding: 5px 12px; border: 1px solid #555; border-radius: 6px;
-            transition: all 0.2s; letter-spacing: 1px;
-        }
+        .lang-btn { color: #aaaaaa; text-decoration: none; font-size: 0.85em; font-weight: bold; padding: 5px 12px; border: 1px solid #555; border-radius: 6px; transition: all 0.2s; letter-spacing: 1px; }
         .lang-btn:hover { color: #ffffff; border-color: #4daafc; background-color: rgba(77, 170, 252, 0.1); }
         .lang-btn.active { color: #4daafc; border-color: #4daafc; background-color: rgba(77, 170, 252, 0.15); cursor: default; }
 
-        /* Sol Bar (Sidebar) */
-        .sidebar {
-            position: fixed; top: 0; left: -260px; width: 260px; height: 100vh;
-            background-color: #252526; box-shadow: 4px 0 15px rgba(0,0,0,0.8);
-            z-index: 1000; overflow-y: auto; padding-top: 0; transition: left 0.3s ease;
-        }
-
-        .sidebar-header {
-            display: flex; align-items: center; height: 60px; padding: 0 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05); margin-bottom: 20px; box-sizing: border-box;
-        }
-
+        /* Sol Bar */
+        .sidebar { position: fixed; top: 0; left: -260px; width: 260px; height: 100vh; background-color: #252526; box-shadow: 4px 0 15px rgba(0,0,0,0.8); z-index: 1000; overflow-y: auto; padding-top: 0; transition: left 0.3s ease; }
+        .sidebar-header { display: flex; align-items: center; height: 60px; padding: 0 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); margin-bottom: 20px; box-sizing: border-box; }
         .sidebar-logo { height: 50px; width: auto; margin-right: 15px; }
         .sidebar-title { color: #ffffff; font-size: 1.4em; font-weight: bold; letter-spacing: 1px; }
         .sidebar-content { padding: 0 20px 30px 20px; }
 
         /* Ana İçerik Alanı */
-        .main-area {
-            background-color: rgba(30, 30, 30, 0.55); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); 
-            border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 15px 35px rgba(0,0,0,0.7); 
-            padding: 40px 6%; line-height: 1.6; font-size: 1.1em; max-width: 900px; margin: 100px auto 50px auto; 
-        }
-
+        .main-area { background-color: rgba(30, 30, 30, 0.55); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 15px 35px rgba(0,0,0,0.7); padding: 40px 6%; line-height: 1.6; font-size: 1.1em; max-width: 900px; margin: 100px auto 50px auto; }
         .sidebar h3 { color: #aaaaaa; font-size: 1em; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; border-bottom: 1px solid #444; padding-bottom: 10px;}
         .sidebar a.log-link { color: #4daafc; text-decoration: none; display: block; margin-bottom: 12px; font-size: 1.05em; }
         .sidebar a.log-link:hover { color: #9cdcfe; text-decoration: underline; }
@@ -106,10 +41,7 @@
         /* AÇIK MENÜ DURUMU */
         body.sidebar-open .sidebar { left: 0; }
         body.sidebar-open .toggle-btn { transform: translateX(260px); }
-        
-        /* GÜNCELLENDİ: Bütün barı itmek yerine sadece yazıyı sağa itiyoruz */
         body.sidebar-open .top-bar { padding-left: 335px; }
-
     </style>
 </head>
 <body>
@@ -117,22 +49,29 @@
     <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
 
     <div class="top-bar">
-        <a href="/" class="top-bar-title">Home</a>
+        <a href="{% if current_lang == 'tr' %}/tr/{% else %}/{% endif %}" class="top-bar-title">
+            {% if current_lang == 'tr' %}Ana Sayfa{% else %}Home{% endif %}
+        </a>
+        
         <div class="lang-menu">
-            <span class="lang-btn active">EN</span>
-            <a href="/tr" class="lang-btn">TR</a>
+            <a href="/" class="lang-btn {% if current_lang == 'en' %}active{% endif %}">EN</a>
+            <a href="/tr/" class="lang-btn {% if current_lang == 'tr' %}active{% endif %}">TR</a>
         </div>
     </div>
 
     <div class="sidebar" id="mySidebar">
         <div class="sidebar-header">
-            <img src="/assets/images/logo.png" alt="Proje Logosu" class="sidebar-logo" onerror="this.src='https://github.com/fluidicon.png'">
+            <img src="/assets/images/logo.png" alt="Logo" class="sidebar-logo" onerror="this.src='https://github.com/fluidicon.png'">
             <div class="sidebar-title">DevLog</div>
         </div>
         <div class="sidebar-content">
-            <h3>Latest Updates</h3>
+            <h3>{% if current_lang == 'tr' %}Son Güncellemeler{% else %}Latest Updates{% endif %}</h3>
+            
             {% for post in site.posts %}
-                <a href="{{ post.url }}" class="log-link">➔ {{ post.title }}</a>
+                {% assign post_lang = post.lang | default: "en" %}
+                {% if post_lang == current_lang %}
+                    <a href="{{ post.url }}" class="log-link">➔ {{ post.title }}</a>
+                {% endif %}
             {% endfor %}
         </div>
     </div>
