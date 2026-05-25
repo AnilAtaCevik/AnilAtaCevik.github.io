@@ -45,8 +45,8 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 60px;
-            background-color: rgba(30, 30, 30, 0.55); 
-            backdrop-filter: blur(10px); 
+            background-color: rgba(30, 30, 30, 0.55); /* Saydamlık oranı %55 */
+            backdrop-filter: blur(10px); /* Bulanıklık 10px */
             -webkit-backdrop-filter: blur(10px); 
             border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
             box-shadow: 0 2px 15px rgba(0,0,0,0.6);
@@ -76,7 +76,7 @@
             transition: left 0.3s ease;
         }
 
-        /* Logo ve Başlık Alanı (Home ile aynı yukseklikte) */
+        /* Logo ve Başlık Alanı */
         .sidebar-header {
             display: flex;
             align-items: center; 
@@ -87,13 +87,10 @@
             box-sizing: border-box;
         }
 
-        /* GÜNCELLENDİ: Çerçevesiz, BÜYÜTÜLMÜŞ Net PNG Logo */
         .sidebar-logo {
-            /* Yüksekliği 32px'den 50px'e çıkardık, bu sayede çok daha büyük ve okunabilir duruyor */
             height: 50px; 
-            width: auto; /* Genişlik otomatik orantılanır */
-            /* max-width sınırlayıcısını kaldırdık ki logo rahatça büyüyebilsin */
-            margin-right: 15px; /* Yazıyla arasına biraz daha boşluk ekledik */
+            width: auto; 
+            margin-right: 15px; 
         }
 
         .sidebar-title {
@@ -105,11 +102,11 @@
 
         .sidebar-content { padding: 0 20px 30px 20px; }
 
-        /* Ana İçerik Alanı */
+        /* GÜNCELLENDİ: Ana İçerik Alanı (Artık Üst Bar ile birebir aynı değerlere sahip) */
         .main-area {
-            background-color: rgba(20, 20, 20, 0.75); 
-            backdrop-filter: blur(8px); 
-            -webkit-backdrop-filter: blur(8px); 
+            background-color: rgba(30, 30, 30, 0.55); /* Renk ve saydamlık eşitlendi */
+            backdrop-filter: blur(10px); /* Bulanıklık eşitlendi */
+            -webkit-backdrop-filter: blur(10px); 
             border-radius: 12px; 
             border: 1px solid rgba(255, 255, 255, 0.1); 
             box-shadow: 0 15px 35px rgba(0,0,0,0.7); 
