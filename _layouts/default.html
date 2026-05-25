@@ -45,14 +45,16 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 60px;
-            background-color: rgba(30, 30, 30, 0.55); /* Saydamlık oranı %55 */
-            backdrop-filter: blur(10px); /* Bulanıklık 10px */
+            background-color: rgba(30, 30, 30, 0.55); 
+            backdrop-filter: blur(10px); 
             -webkit-backdrop-filter: blur(10px); 
             border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
             box-shadow: 0 2px 15px rgba(0,0,0,0.6);
             z-index: 999; 
             display: flex; align-items: center;
+            justify-content: space-between; /* GÜNCELLENDİ: İçeriği sağa ve sola yaslar */
             padding-left: 75px; 
+            padding-right: 30px; /* GÜNCELLENDİ: Sağdan boşluk bırakır */
             box-sizing: border-box;
             transition: transform 0.3s ease;
         }
@@ -62,6 +64,38 @@
             text-decoration: none; transition: color 0.2s;
         }
         .top-bar-title:hover { color: #4daafc; }
+
+        /* YENİ: Dil Seçeneği Butonları */
+        .lang-menu {
+            display: flex;
+            gap: 10px;
+        }
+
+        .lang-btn {
+            color: #aaaaaa;
+            text-decoration: none;
+            font-size: 0.85em;
+            font-weight: bold;
+            padding: 5px 12px;
+            border: 1px solid #555;
+            border-radius: 6px;
+            transition: all 0.2s;
+            letter-spacing: 1px;
+        }
+
+        .lang-btn:hover {
+            color: #ffffff;
+            border-color: #4daafc;
+            background-color: rgba(77, 170, 252, 0.1);
+        }
+
+        /* Seçili olan dilin tasarımı */
+        .lang-btn.active {
+            color: #4daafc;
+            border-color: #4daafc;
+            background-color: rgba(77, 170, 252, 0.15);
+            cursor: default;
+        }
 
         /* Sol Bar (Sidebar) */
         .sidebar {
@@ -76,7 +110,6 @@
             transition: left 0.3s ease;
         }
 
-        /* Logo ve Başlık Alanı */
         .sidebar-header {
             display: flex;
             align-items: center; 
@@ -102,10 +135,10 @@
 
         .sidebar-content { padding: 0 20px 30px 20px; }
 
-        /* GÜNCELLENDİ: Ana İçerik Alanı (Artık Üst Bar ile birebir aynı değerlere sahip) */
+        /* Ana İçerik Alanı */
         .main-area {
-            background-color: rgba(30, 30, 30, 0.55); /* Renk ve saydamlık eşitlendi */
-            backdrop-filter: blur(10px); /* Bulanıklık eşitlendi */
+            background-color: rgba(30, 30, 30, 0.55); 
+            backdrop-filter: blur(10px); 
             -webkit-backdrop-filter: blur(10px); 
             border-radius: 12px; 
             border: 1px solid rgba(255, 255, 255, 0.1); 
@@ -142,6 +175,11 @@
 
     <div class="top-bar">
         <a href="/" class="top-bar-title">Home</a>
+        
+        <div class="lang-menu">
+            <span class="lang-btn active">EN</span>
+            <a href="/tr" class="lang-btn">TR</a>
+        </div>
     </div>
 
     <div class="sidebar" id="mySidebar">
