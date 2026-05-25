@@ -1,3 +1,8 @@
+---
+layout: default
+language: tr
+---
+
 # Geliştirici Günlüğüne Hoş Geldiniz
 
 Uzun zamandır oyun geliştirmeye büyük bir ilgi duyuyorum ve burası, bu tutkumu bir oyun geliştirerek hayata geçirdiğim ve süreç boyunca yaptığım güncellemeleri arşivlediğim yer.
