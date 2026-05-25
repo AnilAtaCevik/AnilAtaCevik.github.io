@@ -5,15 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ site.title }}</title>
     <style>
-        /* Genel Site Ayarları */
+        /* Genel Site Ayarları ve ARKA PLAN GÖRSELİ */
         body {
             margin: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #1e1e1e;
             color: #d4d4d4;
+            background-color: #1e1e1e;
+            
+            /* Arka plan resmi ayarları */
+            background-image: url('/assets/images/bg.png'); /* Yüklediğin görselin adı/uzantısı farklıysa burayı değiştir */
+            background-size: cover; /* Ekrana tam oturt */
+            background-position: center; /* Ortala */
+            background-attachment: fixed; /* Yazıyı kaydırırken resim sabit kalsın */
         }
 
-        /* Her zaman en üstte duran Menü Butonu (Katman: 1001) */
+        /* Sabit Aç/Kapat Butonu ☰ */
         .toggle-btn {
             position: fixed; 
             top: 12px;
@@ -25,82 +31,66 @@
             cursor: pointer;
             padding: 5px 12px;
             border-radius: 5px;
-            z-index: 1001; /* En üst katman */
+            z-index: 1001; 
             transition: background-color 0.2s;
             box-shadow: 0 2px 5px rgba(0,0,0,0.5);
         }
 
-        /* Sadece fare olan cihazlarda hover çalışsın (Mobilde takılı kalma çözümü) */
         @media (hover: hover) {
-            .toggle-btn:hover {
-                background-color: #4daafc;
-            }
+            .toggle-btn:hover { background-color: #4daafc; }
         }
-        
-        /* Dokunma anında geri bildirim versin */
-        .toggle-btn:active {
-            background-color: #4daafc;
-        }
+        .toggle-btn:active { background-color: #4daafc; }
 
-        /* YENİ: Üst Bar (Katman: 999 - Yan barın altında kalır) */
+        /* Üst Bar (Orijinal gri kalsın ki zıtlık yaratsın) */
         .top-bar {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 60px;
+            top: 0; left: 0;
+            width: 100%; height: 60px;
             background-color: #252526;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.6);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.8);
             z-index: 999; 
-            display: flex;
-            align-items: center;
-            padding-left: 75px; /* Menü butonunun arkasında yazının kaybolmaması için boşluk */
+            display: flex; align-items: center;
+            padding-left: 75px; 
             box-sizing: border-box;
         }
 
-        /* Üst Bardaki Ana Sayfa Linki */
         .top-bar-title {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #ffffff;
-            text-decoration: none;
-            transition: color 0.2s;
+            font-size: 1.5em; font-weight: bold; color: #ffffff;
+            text-decoration: none; transition: color 0.2s;
         }
+        .top-bar-title:hover { color: #4daafc; }
 
-        .top-bar-title:hover {
-            color: #4daafc;
-        }
-
-        /* Sol Bar (Katman: 1000 - Üst barın üstünde, butonun altında) */
+        /* Sol Bar */
         .sidebar {
             position: fixed; 
-            top: 0;
-            left: -280px; 
-            width: 260px;
-            height: 100vh;
+            top: 0; left: -280px; 
+            width: 260px; height: 100vh;
             background-color: #252526;
-            box-shadow: 4px 0 15px rgba(0,0,0,0.8);
+            box-shadow: 4px 0 15px rgba(0,0,0,0.9);
             transition: left 0.3s ease; 
-            z-index: 1000;
-            overflow-y: auto;
-            padding-top: 80px; /* Üst bar ve butonun altında içerik ezilmesin diye */
+            z-index: 1000; overflow-y: auto;
+            padding-top: 80px; 
         }
 
-        .sidebar.open {
-            left: 0; 
-        }
+        .sidebar.open { left: 0; }
+        .sidebar-content { padding: 0 20px 30px 20px; }
 
-        .sidebar-content {
-            padding: 0 20px 30px 20px;
-        }
-
-        /* Ana İçerik Alanı */
+        /* YENİ: Saydam Gri Panel (Ana İçerik Kutusu) */
         .main-area {
-            padding: 90px 8% 40px 8%; /* Üst bar eklendiği için üst boşluğu artırdık */
+            background-color: rgba(20, 20, 20, 0.75); /* %75 oranında saydam koyu gri zemin */
+            backdrop-filter: blur(8px); /* Arkadaki görseli buzlu cam gibi hafif bulanıklaştırır */
+            -webkit-backdrop-filter: blur(8px); /* Safari desteği */
+            border-radius: 12px; /* Köşeleri yuvarlatır */
+            border: 1px solid rgba(255, 255, 255, 0.1); /* Çerçeveye ince parlak bir sınır ekler */
+            box-shadow: 0 15px 35px rgba(0,0,0,0.7); /* Kutuyu ekrandan havaya kaldırır (gölge) */
+            
+            padding: 40px 6%;
             line-height: 1.6;
             font-size: 1.1em;
-            max-width: 1000px;
-            margin: 0 auto; 
+            max-width: 900px;
+            
+            /* Üstteki bardan kurtarmak için üstten 100px boşluk, sayfayı ortalamak için auto */
+            margin: 100px auto 50px auto; 
         }
 
         /* Link ve Başlık Tasarımları */
@@ -108,7 +98,7 @@
         .sidebar a.log-link { color: #4daafc; text-decoration: none; display: block; margin-bottom: 12px; font-size: 1.05em; }
         .sidebar a.log-link:hover { color: #9cdcfe; text-decoration: underline; }
         .main-area h1, .main-area h2 { color: #ffffff; }
-        .main-area img { max-width: 100%; border-radius: 8px; margin-top: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
+        .main-area img { max-width: 100%; border-radius: 8px; margin-top: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.5); }
 
     </style>
 </head>
