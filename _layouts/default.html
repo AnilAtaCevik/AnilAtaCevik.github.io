@@ -9,76 +9,61 @@
         body {
             margin: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            height: 100vh;
             background-color: #1e1e1e;
             color: #d4d4d4;
-            overflow: hidden; /* Sayfanın dışa taşmasını engeller */
         }
 
-        /* Sol Bar (Sidebar) Tasarımı */
-        .sidebar {
-            width: 260px;
-            min-width: 260px; /* Alt küçülme limiti */
-            background-color: #252526;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.5);
-            transition: margin-left 0.3s ease; /* Açılma/Kapanma animasyonu */
-            z-index: 1000;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .sidebar-content {
-            padding: 30px 20px;
-            overflow-y: auto;
-            width: 220px; /* Paddingleri hesaba katarak toplam 260px yapar */
-        }
-
-        /* Masaüstünde kapatıldığında sola kayarak gizlenmesi */
-        .sidebar.closed {
-            margin-left: -260px;
-        }
-
-        /* Sağ Taraf - Ana İçerik Alanı */
-        .main-area {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            overflow-y: auto;
-            position: relative;
-        }
-
-        /* Üst Bar (Menü Butonunun duracağı yer) */
-        .top-bar {
-            padding: 15px 20px;
-            background-color: #1e1e1e;
-            position: sticky;
-            top: 0;
-        }
-
-        /* Aç/Kapat Butonu (Hamburger Menü) */
+        /* Her zaman en üstte duran Menü Butonu */
         .toggle-btn {
-            background: none;
-            color: #d4d4d4;
+            position: fixed; /* Sayfa kaydırılsa bile ekranda sabit kalır */
+            top: 15px;
+            left: 20px;
+            background-color: #333333;
+            color: #ffffff;
             border: none;
-            font-size: 26px;
+            font-size: 24px;
             cursor: pointer;
-            padding: 5px 10px;
+            padding: 5px 12px;
             border-radius: 5px;
-            transition: 0.2s;
+            z-index: 1001; /* Menüden (1000) daha yüksek bir değer, böylece asla altında kalmaz */
+            transition: background-color 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
         }
 
         .toggle-btn:hover {
-            color: #4daafc;
-            background-color: #333333;
+            background-color: #4daafc;
         }
 
-        .content {
-            padding: 10px 8%;
+        /* Sol Bar (Artık tüm cihazlarda yazının üstüne çıkacak) */
+        .sidebar {
+            position: fixed; /* Sayfayı ittirmez, üst katmanda durur */
+            top: 0;
+            left: -280px; /* Başlangıçta ekranın solunda tamamen saklı */
+            width: 260px;
+            height: 100vh;
+            background-color: #252526;
+            box-shadow: 4px 0 15px rgba(0,0,0,0.6);
+            transition: left 0.3s ease; /* Kayma animasyonu */
+            z-index: 1000;
+            overflow-y: auto;
+            padding-top: 70px; /* İçerik butonun altında kalmasın diye üstten boşluk */
+        }
+
+        .sidebar.open {
+            left: 0; /* Butona basılınca ekrana girer */
+        }
+
+        .sidebar-content {
+            padding: 0 20px 30px 20px;
+        }
+
+        /* Ana İçerik Alanı */
+        .main-area {
+            padding: 60px 8% 40px 8%; /* En üstte menü butonu için boşluk bırakıyoruz */
             line-height: 1.6;
             font-size: 1.1em;
+            max-width: 1000px;
+            margin: 0 auto; /* İçeriği ortalar */
         }
 
         /* Link ve Başlık Tasarımları */
@@ -87,22 +72,14 @@
         .sidebar h3 { color: #aaaaaa; font-size: 1em; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; }
         .sidebar a.log-link { color: #4daafc; text-decoration: none; display: block; margin-bottom: 12px; font-size: 1.05em; }
         .sidebar a.log-link:hover { color: #9cdcfe; text-decoration: underline; }
-        .content h1, .content h2 { color: #ffffff; }
-        .content img { max-width: 100%; border-radius: 8px; margin-top: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
+        .main-area h1, .main-area h2 { color: #ffffff; }
+        .main-area img { max-width: 100%; border-radius: 8px; margin-top: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
 
-        /* TELEFON VE TABLET İÇİN (Responsive) */
-        @media (max-width: 768px) {
-            .sidebar {
-                position: absolute; /* Mobilde içeriği sıkıştırmak yerine üstüne biner */
-                margin-left: -260px; /* Mobilde başlangıçta kapalıdır */
-            }
-            .sidebar.open {
-                margin-left: 0; /* Mobilde menü butonuna basıldığında açılır */
-            }
-        }
     </style>
 </head>
 <body>
+
+    <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
 
     <div class="sidebar" id="mySidebar">
         <div class="sidebar-content">
@@ -115,27 +92,14 @@
     </div>
 
     <div class="main-area">
-        <div class="top-bar">
-            <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
-        </div>
-
-        <div class="content">
-            {{ content }}
-        </div>
+        {{ content }}
     </div>
 
     <script>
         function toggleSidebar() {
             var sidebar = document.getElementById("mySidebar");
-            
-            // Cihaz ekranı telefon boyutundaysa
-            if (window.innerWidth <= 768) {
-                sidebar.classList.toggle("open");
-            } 
-            // Cihaz ekranı genişse (masaüstü)
-            else {
-                sidebar.classList.toggle("closed");
-            }
+            // Ekran boyutu fark etmeksizin menüyü açıp kapatır
+            sidebar.classList.toggle("open");
         }
     </script>
 
