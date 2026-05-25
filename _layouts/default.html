@@ -40,15 +40,15 @@
         }
         .toggle-btn:active { background-color: #4daafc; }
 
-        /* YENİ: Üst Bar (Artık Saydam ve Buzlu Cam Efektli) */
+        /* Üst Bar */
         .top-bar {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 60px;
-            background-color: rgba(30, 30, 30, 0.55); /* Yarı saydam koyu zemin */
-            backdrop-filter: blur(10px); /* Arkasını bulanıklaştırır */
+            background-color: rgba(30, 30, 30, 0.55); 
+            backdrop-filter: blur(10px); 
             -webkit-backdrop-filter: blur(10px); 
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Hafif, şık bir alt çizgi */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
             box-shadow: 0 2px 15px rgba(0,0,0,0.6);
             z-index: 999; 
             display: flex; align-items: center;
@@ -72,43 +72,35 @@
             background-color: #252526;
             box-shadow: 4px 0 15px rgba(0,0,0,0.8);
             z-index: 1000; overflow-y: auto;
-            /* Üst boşluğu sildik, yerine logo alanı eklendi */
+            padding-top: 80px; /* Sadece üst barın altında kalmasın diye gereken boşluk */
             transition: left 0.3s ease;
         }
 
-        /* YENİ: Logo ve Profil Alanı Tasarımı */
+        /* YENİ: Sola Dayalı, Yan Yana Logo ve Başlık */
         .sidebar-header {
-            margin-top: 70px; /* Üst barın altında kalmasın diye üstten itiyoruz */
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-bottom: 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Logo ile menüyü ayıran çizgi */
+            flex-direction: row; /* Yan yana dizer */
+            align-items: center; /* Dikeyde ortalar */
+            padding: 0 20px 20px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05); 
             margin-bottom: 20px;
         }
 
         .sidebar-logo {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%; /* Görseli tam yuvarlak yapar */
+            width: 45px; /* Küçültülmüş, şık boyut */
+            height: 45px;
+            border-radius: 50%; 
             object-fit: cover;
-            border: 2px solid #4daafc; /* Etrafına mavi bir halka */
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            margin-bottom: 12px;
+            border: 2px solid #4daafc; 
+            box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+            margin-right: 15px; /* Yazıyla arasına boşluk bırakır */
         }
 
         .sidebar-title {
             color: #ffffff;
-            font-size: 1.1em;
+            font-size: 1.4em;
             font-weight: bold;
             letter-spacing: 1px;
-            text-align: center;
-        }
-
-        .sidebar-subtitle {
-            color: #888888;
-            font-size: 0.85em;
-            margin-top: 4px;
         }
 
         .sidebar-content { padding: 0 20px 30px 20px; }
@@ -152,15 +144,14 @@
     <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
 
     <div class="top-bar">
-        <a href="/" class="top-bar-title">🏠 DevLog</a>
+        <a href="/" class="top-bar-title">Home</a>
     </div>
 
     <div class="sidebar" id="mySidebar">
         
         <div class="sidebar-header">
             <img src="/assets/images/logo.png" alt="Proje Logosu" class="sidebar-logo" onerror="this.src='https://github.com/fluidicon.png'">
-            <div class="sidebar-title">Geliştirici Günlüğü</div>
-            <div class="sidebar-subtitle">Unity & RPG Projeleri</div>
+            <div class="sidebar-title">DevLog</div>
         </div>
 
         <div class="sidebar-content">
