@@ -33,9 +33,18 @@
         .main-area h1, .main-area h2 { color: #ffffff; }
         .main-area img { max-width: 100%; border-radius: 8px; margin-top: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.5); }
 
+        /* ========================================================
+           AÇIK MENÜ DURUMU VE CİHAZ UYUMLULUĞU (RESPONSIVE)
+           ======================================================== */
+           
+        /* Her cihazda menü ekrana girer ve buton sağa kayar */
         body.sidebar-open .sidebar { left: 0; }
         body.sidebar-open .toggle-btn { transform: translateX(260px); }
-        body.sidebar-open .top-bar { padding-left: 335px; }
+        
+        /* GÜNCELLENDİ: Sadece geniş ekranlarda (Bilgisayar/Tablet) üst bar sağa itilir */
+        @media (min-width: 769px) {
+            body.sidebar-open .top-bar { padding-left: 335px; }
+        }
     </style>
 </head>
 <body>
