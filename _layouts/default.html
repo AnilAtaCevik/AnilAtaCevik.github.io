@@ -35,9 +35,7 @@
             transition: transform 0.3s ease, background-color 0.2s;
         }
 
-        @media (hover: hover) {
-            .toggle-btn:hover { background-color: #4daafc; }
-        }
+        @media (hover: hover) { .toggle-btn:hover { background-color: #4daafc; } }
         .toggle-btn:active { background-color: #4daafc; }
 
         /* Üst Bar */
@@ -52,11 +50,12 @@
             box-shadow: 0 2px 15px rgba(0,0,0,0.6);
             z-index: 999; 
             display: flex; align-items: center;
-            justify-content: space-between; /* GÜNCELLENDİ: İçeriği sağa ve sola yaslar */
+            justify-content: space-between; 
             padding-left: 75px; 
-            padding-right: 30px; /* GÜNCELLENDİ: Sağdan boşluk bırakır */
+            padding-right: 30px; 
             box-sizing: border-box;
-            transition: transform 0.3s ease;
+            /* GÜNCELLENDİ: Transform yerine padding animasyonu eklendi */
+            transition: padding-left 0.3s ease; 
         }
 
         .top-bar-title {
@@ -65,89 +64,37 @@
         }
         .top-bar-title:hover { color: #4daafc; }
 
-        /* YENİ: Dil Seçeneği Butonları */
-        .lang-menu {
-            display: flex;
-            gap: 10px;
-        }
-
+        /* Dil Seçeneği Butonları */
+        .lang-menu { display: flex; gap: 10px; }
         .lang-btn {
-            color: #aaaaaa;
-            text-decoration: none;
-            font-size: 0.85em;
-            font-weight: bold;
-            padding: 5px 12px;
-            border: 1px solid #555;
-            border-radius: 6px;
-            transition: all 0.2s;
-            letter-spacing: 1px;
+            color: #aaaaaa; text-decoration: none; font-size: 0.85em; font-weight: bold;
+            padding: 5px 12px; border: 1px solid #555; border-radius: 6px;
+            transition: all 0.2s; letter-spacing: 1px;
         }
-
-        .lang-btn:hover {
-            color: #ffffff;
-            border-color: #4daafc;
-            background-color: rgba(77, 170, 252, 0.1);
-        }
-
-        /* Seçili olan dilin tasarımı */
-        .lang-btn.active {
-            color: #4daafc;
-            border-color: #4daafc;
-            background-color: rgba(77, 170, 252, 0.15);
-            cursor: default;
-        }
+        .lang-btn:hover { color: #ffffff; border-color: #4daafc; background-color: rgba(77, 170, 252, 0.1); }
+        .lang-btn.active { color: #4daafc; border-color: #4daafc; background-color: rgba(77, 170, 252, 0.15); cursor: default; }
 
         /* Sol Bar (Sidebar) */
         .sidebar {
-            position: fixed; 
-            top: 0; 
-            left: -260px; 
-            width: 260px; height: 100vh;
-            background-color: #252526;
-            box-shadow: 4px 0 15px rgba(0,0,0,0.8);
-            z-index: 1000; overflow-y: auto;
-            padding-top: 0; 
-            transition: left 0.3s ease;
+            position: fixed; top: 0; left: -260px; width: 260px; height: 100vh;
+            background-color: #252526; box-shadow: 4px 0 15px rgba(0,0,0,0.8);
+            z-index: 1000; overflow-y: auto; padding-top: 0; transition: left 0.3s ease;
         }
 
         .sidebar-header {
-            display: flex;
-            align-items: center; 
-            height: 60px;
-            padding: 0 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05); 
-            margin-bottom: 20px;
-            box-sizing: border-box;
+            display: flex; align-items: center; height: 60px; padding: 0 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05); margin-bottom: 20px; box-sizing: border-box;
         }
 
-        .sidebar-logo {
-            height: 50px; 
-            width: auto; 
-            margin-right: 15px; 
-        }
-
-        .sidebar-title {
-            color: #ffffff;
-            font-size: 1.4em;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-
+        .sidebar-logo { height: 50px; width: auto; margin-right: 15px; }
+        .sidebar-title { color: #ffffff; font-size: 1.4em; font-weight: bold; letter-spacing: 1px; }
         .sidebar-content { padding: 0 20px 30px 20px; }
 
         /* Ana İçerik Alanı */
         .main-area {
-            background-color: rgba(30, 30, 30, 0.55); 
-            backdrop-filter: blur(10px); 
-            -webkit-backdrop-filter: blur(10px); 
-            border-radius: 12px; 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.7); 
-            padding: 40px 6%;
-            line-height: 1.6;
-            font-size: 1.1em;
-            max-width: 900px;
-            margin: 100px auto 50px auto; 
+            background-color: rgba(30, 30, 30, 0.55); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); 
+            border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 15px 35px rgba(0,0,0,0.7); 
+            padding: 40px 6%; line-height: 1.6; font-size: 1.1em; max-width: 900px; margin: 100px auto 50px auto; 
         }
 
         .sidebar h3 { color: #aaaaaa; font-size: 1em; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; border-bottom: 1px solid #444; padding-bottom: 10px;}
@@ -156,16 +103,12 @@
         .main-area h1, .main-area h2 { color: #ffffff; }
         .main-area img { max-width: 100%; border-radius: 8px; margin-top: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.5); }
 
-
         /* AÇIK MENÜ DURUMU */
-        body.sidebar-open .sidebar {
-            left: 0;
-        }
-
-        body.sidebar-open .top-bar,
-        body.sidebar-open .toggle-btn {
-            transform: translateX(260px);
-        }
+        body.sidebar-open .sidebar { left: 0; }
+        body.sidebar-open .toggle-btn { transform: translateX(260px); }
+        
+        /* GÜNCELLENDİ: Bütün barı itmek yerine sadece yazıyı sağa itiyoruz */
+        body.sidebar-open .top-bar { padding-left: 335px; }
 
     </style>
 </head>
@@ -175,7 +118,6 @@
 
     <div class="top-bar">
         <a href="/" class="top-bar-title">Home</a>
-        
         <div class="lang-menu">
             <span class="lang-btn active">EN</span>
             <a href="/tr" class="lang-btn">TR</a>
@@ -183,12 +125,10 @@
     </div>
 
     <div class="sidebar" id="mySidebar">
-        
         <div class="sidebar-header">
             <img src="/assets/images/logo.png" alt="Proje Logosu" class="sidebar-logo" onerror="this.src='https://github.com/fluidicon.png'">
             <div class="sidebar-title">DevLog</div>
         </div>
-
         <div class="sidebar-content">
             <h3>Latest Updates</h3>
             {% for post in site.posts %}
@@ -202,9 +142,7 @@
     </div>
 
     <script>
-        function toggleSidebar() {
-            document.body.classList.toggle("sidebar-open");
-        }
+        function toggleSidebar() { document.body.classList.toggle("sidebar-open"); }
     </script>
 
 </body>
