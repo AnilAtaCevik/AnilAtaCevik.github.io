@@ -62,6 +62,29 @@
         .main-area h1, .main-area h2 { color: #ffffff; }
         .main-area img { max-width: 100%; border-radius: 8px; margin-top: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.5); }
 
+        /* =========================================================
+           YENİ EKLENEN KISIM: YOUTUBE VİDEOLARI İÇİN RESPONSIVE KUTU 
+           ========================================================= */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Ekran Oranı */
+            height: 0;
+            overflow: hidden;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px; /* Tasarımla uyumlu yuvarlak köşeler */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
         /* AÇIK MENÜ DURUMU VE CİHAZ UYUMLULUĞU (RESPONSIVE) */
         body.sidebar-open .sidebar { left: 0; }
         body.sidebar-open .toggle-btn { transform: translateX(260px); }
