@@ -100,9 +100,16 @@
     <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
 
     <div class="top-bar">
-        <a href="{% if current_lang == 'tr' %}/tr/{% else %}/{% endif %}" class="top-bar-title">
-            {% if current_lang == 'tr' %}Ana Sayfa{% else %}Home{% endif %}
-        </a>
+        <div style="display: flex; align-items: baseline; gap: 25px;">
+            <a href="{% if current_lang == 'tr' %}/tr/{% else %}/{% endif %}" class="top-bar-title">
+                {% if current_lang == 'tr' %}Ana Sayfa{% else %}Home{% endif %}
+            </a>
+            
+            <!-- YENİ EKLENEN KAYNAKLAR LİNKİ -->
+            <a href="{% if current_lang == 'tr' %}/tr/kaynaklar/{% else %}/resources/{% endif %}" style="color: #aaaaaa; text-decoration: none; font-size: 1.1em; font-weight: 600; transition: color 0.2s;" onmouseover="this.style.color='#4daafc'" onmouseout="this.style.color='#aaaaaa'">
+                {% if current_lang == 'tr' %}Kaynaklar{% else %}Resources{% endif %}
+            </a>
+        </div>
         
         <div class="lang-menu">
             {% if current_lang == 'tr' %}
